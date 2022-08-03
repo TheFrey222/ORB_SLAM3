@@ -544,13 +544,13 @@ namespace ORB_SLAM3 {
 
         if(!settings.vPinHoleDistorsion1_.empty()){
             output << "\t-Camera 1 distortion parameters: [ ";
-            for(float d : settings.vPinHoleDistorsion1_){
+            for(const float& d : settings.vPinHoleDistorsion1_){
                 output << " " << d;
             }
             output << " ]" << endl;
         }
 
-        if(settings.sensor_ == System::STEREO || settings.sensor_ == System::IMU_STEREO){
+        if((settings.sensor_ == System::STEREO || settings.sensor_ == System::IMU_STEREO) && settings.cameraType_ !=  Settings::Rectified){
             output << "\t-Camera 2 parameters (";
             if(settings.cameraType_ == Settings::PinHole || settings.cameraType_ ==  Settings::Rectified){
                 output << "Pinhole";
