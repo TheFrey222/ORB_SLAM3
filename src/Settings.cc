@@ -565,7 +565,7 @@ namespace ORB_SLAM3 {
             output << " ]" << endl;
 
             if(!settings.vPinHoleDistorsion2_.empty()){
-                output << "\t-Camera 1 distortion parameters: [ ";
+                output << "\t-Camera 2 distortion parameters: [ ";
                 for(float d : settings.vPinHoleDistorsion2_){
                     output << " " << d;
                 }
