@@ -1,32 +1,33 @@
 %YAML:1.0
 
 #--------------------------------------------------------------------------------------------
-# Camera Parameters.
+# Camera Parameters. Adjust them!
 #--------------------------------------------------------------------------------------------
 File.version: "1.0"
 
-Camera.type: "Rectified"
+Camera.type: "PinHole"
 
 # Rectified Camera calibration (OpenCV)
-Camera1.fx: 424.2517091167281
-Camera1.fy: 424.2517091167281
-Camera1.cx: 324.4187812805176
-Camera1.cy: 246.3939075469971
+Camera1.fx: 383.0
+Camera1.fy: 383.0
+Camera1.cx: 175.0
+Camera1.cy: 147.0
 
-Stereo.b: 27.0049788226974 # 424.2517091167281 * 0.06365319983
+# Distortion parameters
+Camera1.k1: 0.0
+Camera1.k2: 0.0
+Camera1.p1: 0.0
+Camera1.p2: 0.0
 
 # Camera resolution
-Camera.width: 640
-Camera.height: 480
+Camera.width: 390
+Camera.height: 290
 
 # Camera frames per second 
 Camera.fps: 30
 
 # Color order of the images (0: BGR, 1: RGB. It is ignored if images are grayscale)
 Camera.RGB: 0
-
-# Close/Far threshold. Baseline times.
-Stereo.ThDepth: 40.0
 
 #--------------------------------------------------------------------------------------------
 # ORB Parameters
