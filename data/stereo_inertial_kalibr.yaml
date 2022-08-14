@@ -8,48 +8,41 @@ File.version: "1.0"
 Camera.type: "PinHole"
 
 # Left Camera calibration and distortion parameters (OpenCV) 
-Camera1.fx: 424.2517091167281
-Camera1.fy: 424.2517091167281
-Camera1.cx: 324.4187812805176
-Camera1.cy: 246.3939075469971
+Camera1.fx: 382.2922624214317
+Camera1.fy: 383.5338783858801
+Camera1.cx: 344.1912683089001
+Camera1.cy: 234.30197030250724
 
 # Distortion parameters
-Camera1.k1: 0.0
-Camera1.k2: 0.0
-Camera1.p1: 0.0
-Camera1.p2: 0.0
+Camera1.k1: -0.06542680216740046
+Camera1.k2: 0.006386566946271976
+Camera1.p1: 0.0036456252244726093
+Camera1.p2: -0.0014151770436471574
 
 # Right Camera calibration and distortion parameters (OpenCV)
-Camera2.fx: 424.2517091167281
-Camera2.fy: 424.2517091167281
-Camera2.cx: 324.4187812805176
-Camera2.cy: 246.3939075469971
+Camera2.fx: 382.008935414301
+Camera2.fy: 382.5732189503124
+Camera2.cx: 341.17421449721957
+Camera2.cy: 257.40264523233105
 
 # Distortion parameters
-Camera2.k1: 0.0
-Camera2.k2: 0.0
-Camera2.p1: 0.0
-Camera2.p2: 0.0
+Camera2.k1: -0.06315110568555352
+Camera2.k2: 0.00771732574582148
+Camera2.p1: 0.003389826760779383
+Camera2.p2: 0.0019184462516875997
 
 # Stereo Baseline times fx
-Stereo.bf: 27.0049788226974 # 0.06365319983 * 424.2517091167281
+# Stereo.bf: 27.0049788226974 # 0.06365319983 * 424.2517091167281
     
 # Transformation matrix from right camera to left camera
 Stereo.T_c1_c2: !!opencv-matrix
   rows: 4
   cols: 4
   dt: f
-  data: [1.0, 0.0, 0.0, 27.0049788226974,
-         0.0, 1.0, 0.0, 0.0,
-         0.0, 0.0, 1.0, 0.0,
+  data: [0.9988450875998286, -0.02643812364091521, 0.0401187810886736, 0.06347598492444047,
+         0.027284504122256033, 0.9994134026429271, -0.02069798184585576, 0.00033266606432515774,
+         -0.0395480317145598, 0.021768698537957234, 0.9989805188047813, -0.000703104827975106,
          0.0, 0.0, 0.0, 1.0]
-
-# Overlapping area between images (to be updated)
-Camera1.overlappingBegin: 0
-Camera1.overlappingEnd: 640
-
-Camera2.overlappingBegin: 0
-Camera2.overlappingEnd: 640
 
 # Camera resolution
 Camera.width: 640
@@ -63,6 +56,30 @@ Camera.RGB: 1
 
 # Close/Far threshold. Baseline times.
 Stereo.ThDepth: 40.0
+
+#--------------------------------------------------------------------------------------------
+# IMU Parameters
+#--------------------------------------------------------------------------------------------
+
+# Transformation from body-frame (imu) to left camera
+IMU.T_b_c1: !!opencv-matrix
+   rows: 4
+   cols: 4
+   dt: f
+   data: [-0.03987661941147705, -0.9991937513396911, 0.004658595069909732, -0.03539100333504676,
+          0.025758046347625907, -0.005688704294603247, -0.9996520203009645, -0.022095745819501567,
+          0.9988725535686039, -0.03974274684973017, 0.025964125253366416, -0.5437651322484358,
+          0.0, 0.0, 0.0, 1.0]
+
+# Do not insert KFs when recently lost
+IMU.InsertKFsWhenLost: 0
+
+# IMU noise
+IMU.NoiseGyro: 6.981e-05 # rad/s^0.5
+IMU.NoiseAcc: 6.0e-05 # m/s^1.5
+IMU.GyroWalk: 1.939e-05 # rad/s^1.5
+IMU.AccWalk: 1.5e-05 # m/s^2.5
+IMU.Frequency: 400.0
 
 #--------------------------------------------------------------------------------------------
 # ORB Parameters

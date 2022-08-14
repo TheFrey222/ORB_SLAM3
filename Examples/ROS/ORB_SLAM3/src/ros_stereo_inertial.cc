@@ -30,6 +30,7 @@
 #include<sensor_msgs/Imu.h>
 
 #include<opencv2/core/core.hpp>
+#include<opencv2/sfm/projection.hpp>
 
 #include"../../../include/System.h"
 #include"../include/ImuTypes.h"
@@ -108,33 +109,103 @@ int main(int argc, char **argv)
             return -1;
         }
 
-        cv::Mat K_l, K_r, P_l, P_r, R_l, R_r, D_l, D_r;
-        fsSettings["LEFT.K"] >> K_l;
-        fsSettings["RIGHT.K"] >> K_r;
+        int rows = fsSettings["Camera.height"];
+        int cols = fsSettings["Camera.width"];
 
-        fsSettings["LEFT.P"] >> P_l;
-        fsSettings["RIGHT.P"] >> P_r;
+        cv::Mat K_l(3, 3, CV_32F);
+        cv::Mat K_r(3, 3, CV_32F);
+        cv::Mat D_l(1, 4, CV_32F);
+        cv::Mat D_r(1, 4, CV_32F); 
+        cv::Mat R_r, P_r, cvTlr, t_r;
 
-        fsSettings["LEFT.R"] >> R_l;
-        fsSettings["RIGHT.R"] >> R_r;
+        K_l.at<float>(0,0) = fsSettings["Camera1.fx"];
+        K_l.at<float>(1,1) = fsSettings["Camera1.fy"];
+        K_l.at<float>(0,2) = fsSettings["Camera1.cx"];
+        K_l.at<float>(1,2) = fsSettings["Camera1.cy"];
+        K_l.at<float>(0,1) = 0.0;
+        K_l.at<float>(1,0) = 0.0;
+        K_l.at<float>(2,0) = 0.0;
+        K_l.at<float>(2,1) = 0.0;
+        K_l.at<float>(2,2) = 1.0;
 
-        fsSettings["LEFT.D"] >> D_l;
-        fsSettings["RIGHT.D"] >> D_r;
+        cout << "K_l = " << endl << " " << K_l << endl << endl;
 
-        int rows_l = fsSettings["LEFT.height"];
-        int cols_l = fsSettings["LEFT.width"];
-        int rows_r = fsSettings["RIGHT.height"];
-        int cols_r = fsSettings["RIGHT.width"];
+        K_r.at<float>(0,0) = fsSettings["Camera2.fx"];
+        K_r.at<float>(1,1) = fsSettings["Camera2.fy"];
+        K_r.at<float>(0,2) = fsSettings["Camera2.cx"];
+        K_r.at<float>(1,2) = fsSettings["Camera2.cy"];
+        K_r.at<float>(0,1) = 0.0;
+        K_r.at<float>(1,0) = 0.0;
+        K_r.at<float>(2,0) = 0.0;
+        K_r.at<float>(2,1) = 0.0;
+        K_r.at<float>(2,2) = 1.0;
 
-        if(K_l.empty() || K_r.empty() || P_l.empty() || P_r.empty() || R_l.empty() || R_r.empty() || D_l.empty() || D_r.empty() ||
-                rows_l==0 || rows_r==0 || cols_l==0 || cols_r==0)
+        cout << "K_r = " << endl << " " << K_r << endl << endl;
+
+        D_l.at<float>(0,0) = fsSettings["Camera1.k1"];
+        D_l.at<float>(0,1) = fsSettings["Camera1.k2"];
+        D_l.at<float>(0,2) = fsSettings["Camera1.p1"];
+        D_l.at<float>(0,3) = fsSettings["Camera1.p2"];
+
+        cout << "D_l = " << endl << " " << D_l << endl << endl;
+
+        D_r.at<float>(0,0) = fsSettings["Camera2.k1"];
+        D_r.at<float>(0,1) = fsSettings["Camera2.k2"];
+        D_r.at<float>(0,2) = fsSettings["Camera2.p1"];
+        D_r.at<float>(0,3) = fsSettings["Camera2.p2"];
+
+        cout << "D_r = " << endl << " " << D_r << endl << endl;
+
+        cv::Rect roi_l, roi_r;
+        
+        cvTlr = fsSettings["Stereo.T_c1_c2"].mat();
+        R_r = cvTlr.rowRange(0,3).colRange(0,3);
+        t_r = cvTlr.rowRange(0,3).colRange(3,4);
+
+        cout << "cvTlr = " << endl << " " << cvTlr << endl << endl;
+        cout << "R_r = " << endl << " " << R_r << endl << endl;
+        cout << "t_r = " << endl << " " << t_r << endl << endl;
+
+        cv::sfm::projectionFromKRt(K_r, R_r, t_r, P_r);
+
+        cout << "P_r = " << endl << " " << P_r << endl << endl;
+
+
+        if(K_l.empty())
         {
-            cerr << "ERROR: Calibration parameters to rectify stereo are missing!" << endl;
+            cerr << "ERROR: Calibration parameters K_l to rectify stereo are missing!" << endl;
+            return -1;
+        }
+        else if(K_r.empty())
+        {
+            cerr << "ERROR: Calibration parameters K_r to rectify stereo are missing!" << endl;
+            return -1;
+        } 
+        else if(P_r.empty())
+        {
+            cerr << "ERROR: Calibration parameters P_r to rectify stereo are missing!" << endl;
+            return -1;
+        }
+        else if(R_r.empty())
+        {
+            cerr << "ERROR: Calibration parameters R_r to rectify stereo are missing!" << endl;
+            return -1;
+        }
+        else if(D_l.empty())
+        {
+            cerr << "ERROR: Calibration parameters D_l to rectify stereo are missing!" << endl;
+            return -1;
+        }
+        else if(D_r.empty())
+        {
+            cerr << "ERROR: Calibration parameters D_r to rectify stereo are missing!" << endl;
             return -1;
         }
 
-        cv::initUndistortRectifyMap(K_l,D_l,R_l,P_l.rowRange(0,3).colRange(0,3),cv::Size(cols_l,rows_l),CV_32F,igb.M1l,igb.M2l);
-        cv::initUndistortRectifyMap(K_r,D_r,R_r,P_r.rowRange(0,3).colRange(0,3),cv::Size(cols_r,rows_r),CV_32F,igb.M1r,igb.M2r);
+        cv::initUndistortRectifyMap(K_l, D_l, cv::Mat(), 
+                                    cv::getOptimalNewCameraMatrix(K_l, D_l, cv::Size(cols,rows), 1, cv::Size(cols,rows), 0),
+                                    cv::Size(cols,rows), CV_32F, igb.M1l, igb.M2l);
+        cv::initUndistortRectifyMap(K_r, D_r, R_r, P_r, cv::Size(cols,rows), CV_32F, igb.M1r, igb.M2r);
     }
 
   // Maximum delay, 5 seconds
