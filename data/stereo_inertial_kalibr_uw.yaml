@@ -8,10 +8,10 @@ File.version: "1.0"
 Camera.type: "Rectified"
 
 # Left Camera calibration and distortion parameters (OpenCV) 
-Camera1.fx: 441.42414186854285
-Camera1.fy: 441.42414186854285
-Camera1.cx: 295.0
-Camera1.cy: 218.0
+Camera1.fx: 468.21
+Camera1.fy: 468.21
+Camera1.cx: 371.374
+Camera1.cy: 240.556
 
 # Distortion parameters
 Camera1.k1: 0.0
@@ -20,44 +20,20 @@ Camera1.p1: 0.0
 Camera1.p2: 0.0
 
 # Stereo Baseline times fx
-Stereo.b: 0.0642591902375652 
+Stereo.b: 0.0641566
 
 # Camera resolution
-Camera.width: 590
-Camera.height: 436
+Camera.width: 640
+Camera.height: 480
 
 # Camera frames per second 
 Camera.fps: 30
 
 # Color order of the images (0: BGR, 1: RGB. It is ignored if images are grayscale)
-Camera.RGB: 1
+Camera.RGB: 0
 
 # Close/Far threshold. Baseline times.
 Stereo.ThDepth: 60.0
-
-#--------------------------------------------------------------------------------------------
-# IMU Parameters
-#--------------------------------------------------------------------------------------------
-
-# Transformation from body-frame (imu) to left camera
-IMU.T_b_c1: !!opencv-matrix
-   rows: 4
-   cols: 4
-   dt: f
-   data: [-0.03987661941147705, -0.9991937513396911, 0.004658595069909732, -0.03539100333504676,
-          0.025758046347625907, -0.005688704294603247, -0.9996520203009645, -0.022095745819501567,
-          0.9988725535686039, -0.03974274684973017, 0.025964125253366416, -0.5437651322484358,
-          0.0, 0.0, 0.0, 1.0]
-
-# Do not insert KFs when recently lost
-IMU.InsertKFsWhenLost: 0
-
-# IMU noise
-IMU.NoiseGyro: 6.981e-05 # rad/s^0.5
-IMU.NoiseAcc: 6.0e-05 # m/s^1.5
-IMU.GyroWalk: 1.939e-05 # rad/s^1.5
-IMU.AccWalk: 1.5e-05 # m/s^2.5
-IMU.Frequency: 400.0
 
 #--------------------------------------------------------------------------------------------
 # ORB Parameters
