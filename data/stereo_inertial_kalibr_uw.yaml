@@ -1,71 +1,74 @@
 %YAML:1.0
-
-#--------------------------------------------------------------------------------------------
-# Camera Parameters. Adjust them!
-#--------------------------------------------------------------------------------------------
-File.version: "1.0"
-
-Camera.type: "Rectified"
-
+---
+# --------------------------------------------------------------------------------------------
+#  Camera Parameters. Adjust them!
+# --------------------------------------------------------------------------------------------
+#  
+File_version: "1.0"
+#  
+Camera_type: Rectified
+#  
 # Left Camera calibration and distortion parameters (OpenCV) 
-Camera1.fx: 468.21
-Camera1.fy: 468.21
-Camera1.cx: 371.374
-Camera1.cy: 240.556
-
+Camera_fx: 4.6820971886689858e+02
+Camera_fy: 4.6820971886689858e+02
+Camera_cx: 3.7137362670898438e+02
+Camera_cy: 2.4055605125427246e+02
+#  
 # Distortion parameters
-Camera1.k1: 0.0
-Camera1.k2: 0.0
-Camera1.p1: 0.0
-Camera1.p2: 0.0
-
-# Stereo Baseline times fx
-Stereo.b: 0.0641566
-
+Camera_k1: 0.
+Camera_k2: 0.
+Camera_p1: 0.
+Camera_p2: 0.
+#  
+# Stereo Baseline
+Camera_bf: 3.0038738671857686e+01
+#  
 # Camera resolution
-Camera.width: 640
-Camera.height: 480
-
-# Camera frames per second 
-Camera.fps: 30
-
-# Color order of the images (0: BGR, 1: RGB. It is ignored if images are grayscale)
-Camera.RGB: 0
-
-# Close/Far threshold. Baseline times.
-Stereo.ThDepth: 60.0
-
-#--------------------------------------------------------------------------------------------
+Camera_width: 640
+Camera_height: 480
+#  
+# Camera resolution
+Camera_fps: 30.
+#  
+# Camera resolution
+Camera_RGB: 0
+#  
+# Camera resolution
+ThDepth: 60.
+#  
+# --------------------------------------------------------------------------------------------
 # ORB Parameters
-#--------------------------------------------------------------------------------------------
-
+# --------------------------------------------------------------------------------------------
+#  
 # ORB Extractor: Number of features per image
-ORBextractor.nFeatures: 500 # Tested with 1250
-
-# ORB Extractor: Scale factor between levels in the scale pyramid 	
-ORBextractor.scaleFactor: 1.2
-
-# ORB Extractor: Number of levels in the scale pyramid	
-ORBextractor.nLevels: 8
-
+ORBextractor_nFeatures: 500
+#  
+# ORB Extractor: Scale factor between levels in the scale pyramid
+ORBextractor_scaleFactor: 1.2000000000000000e+00
+#  
+# ORB Extractor: Number of levels in the scale pyramid
+ORBextractor_nLevels: 8
+#  
 # ORB Extractor: Fast threshold
 # Image is divided in a grid. At each cell FAST are extracted imposing a minimum response.
 # Firstly we impose iniThFAST. If no corners are detected we impose a lower value minThFAST
-# You can lower these values if your images have low contrast			
-ORBextractor.iniThFAST: 15
-ORBextractor.minThFAST: 7
-
-#--------------------------------------------------------------------------------------------
+# You can lower these values if your images have low contrast
+ORBextractor_iniThFAST: 15
+ORBextractor_minThFAST: 7
+#  
+# --------------------------------------------------------------------------------------------
 # Viewer Parameters
-#--------------------------------------------------------------------------------------------
-Viewer.KeyFrameSize: 0.05
-Viewer.KeyFrameLineWidth: 1.0
-Viewer.GraphLineWidth: 0.9
-Viewer.PointSize: 2.0
-Viewer.CameraSize: 0.08
-Viewer.CameraLineWidth: 3.0
-Viewer.ViewpointX: 0.0
-Viewer.ViewpointY: -0.7
-Viewer.ViewpointZ: -3.5
-Viewer.ViewpointF: 500.0
-Viewer.imageViewScale: 2.0
+# --------------------------------------------------------------------------------------------
+#  
+Viewer_KeyFrameSize: 5.0000000000000003e-02
+Viewer_KeyFrameLineWidth: 1.
+Viewer_GraphLineWidth: 9.0000000000000002e-01
+Viewer_PointSize: 2.
+Viewer_CameraSize: 8.0000000000000002e-02
+Viewer_CameraLineWidth: 3.
+Viewer_ViewpointX: 0.
+Viewer_ViewpointY: -6.9999999999999996e-01
+Viewer_ViewpointZ: -3.5000000000000000e+00
+Viewer_ViewpointF: 500.
+Viewer_imageViewScale: 2.
+#  
