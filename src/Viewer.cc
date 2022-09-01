@@ -79,80 +79,80 @@ bool Viewer::ParseViewerParamFile(cv::FileStorage &fSettings)
     bool b_miss_params = false;
     mImageViewerScale = 1.f;
 
-    float fps = fSettings["Camera_fps"];
+    float fps = fSettings["Camera.fps"];
     if(fps<1)
         fps=30;
     mT = 1e3/fps;
 
-    cv::FileNode node = fSettings["Camera_width"];
+    cv::FileNode node = fSettings["Camera.width"];
     if(!node.empty())
     {
         mImageWidth = node.real();
     }
     else
     {
-        std::cerr << "*Camera_width parameter doesn't exist or is not a real number*" << std::endl;
+        std::cerr << "*Camera.width parameter doesn't exist or is not a real number*" << std::endl;
         b_miss_params = true;
     }
 
-    node = fSettings["Camera_height"];
+    node = fSettings["Camera.height"];
     if(!node.empty())
     {
         mImageHeight = node.real();
     }
     else
     {
-        std::cerr << "*Camera_height parameter doesn't exist or is not a real number*" << std::endl;
+        std::cerr << "*Camera.height parameter doesn't exist or is not a real number*" << std::endl;
         b_miss_params = true;
     }
 
-    node = fSettings["Viewer_imageViewScale"];
+    node = fSettings["Viewer.imageViewScale"];
     if(!node.empty())
     {
         mImageViewerScale = node.real();
     }
 
-    node = fSettings["Viewer_ViewpointX"];
+    node = fSettings["Viewer.ViewpointX"];
     if(!node.empty())
     {
         mViewpointX = node.real();
     }
     else
     {
-        std::cerr << "*Viewer_ViewpointX parameter doesn't exist or is not a real number*" << std::endl;
+        std::cerr << "*Viewer.ViewpointX parameter doesn't exist or is not a real number*" << std::endl;
         b_miss_params = true;
     }
 
-    node = fSettings["Viewer_ViewpointY"];
+    node = fSettings["Viewer.ViewpointY"];
     if(!node.empty())
     {
         mViewpointY = node.real();
     }
     else
     {
-        std::cerr << "*Viewer_ViewpointY parameter doesn't exist or is not a real number*" << std::endl;
+        std::cerr << "*Viewer.ViewpointY parameter doesn't exist or is not a real number*" << std::endl;
         b_miss_params = true;
     }
 
-    node = fSettings["Viewer_ViewpointZ"];
+    node = fSettings["Viewer.ViewpointZ"];
     if(!node.empty())
     {
         mViewpointZ = node.real();
     }
     else
     {
-        std::cerr << "*Viewer_ViewpointZ parameter doesn't exist or is not a real number*" << std::endl;
+        std::cerr << "*Viewer.ViewpointZ parameter doesn't exist or is not a real number*" << std::endl;
         b_miss_params = true;
     }
 
-    node = fSettings["Viewer_ViewpointF"];
+    node = fSettings["Viewer.ViewpointF"];
     if(!node.empty())
     {
         mViewpointF = node.real();
     }
     else
     {
-        std::cerr << "*Viewer_ViewpointF parameter doesn't exist or is not a real number*" << std::endl;
+        std::cerr << "*Viewer.ViewpointF parameter doesn't exist or is not a real number*" << std::endl;
         b_miss_params = true;
     }
 

@@ -185,17 +185,17 @@ namespace ORB_SLAM3 {
         bool found;
 
         //Read camera model
-        string cameraModel = readParameter<string>(fSettings,"Camera_type",found);
+        string cameraModel = readParameter<string>(fSettings,"Camera.type",found);
 
         vector<float> vCalibration;
         if (cameraModel == "PinHole") {
             cameraType_ = PinHole;
 
             //Read intrinsic parameters
-            float fx = readParameter<float>(fSettings,"Camera1_fx",found);
-            float fy = readParameter<float>(fSettings,"Camera1_fy",found);
-            float cx = readParameter<float>(fSettings,"Camera1_cx",found);
-            float cy = readParameter<float>(fSettings,"Camera1_cy",found);
+            float fx = readParameter<float>(fSettings,"Camera1.fx",found);
+            float fy = readParameter<float>(fSettings,"Camera1.fy",found);
+            float cx = readParameter<float>(fSettings,"Camera1.cx",found);
+            float cy = readParameter<float>(fSettings,"Camera1.cy",found);
 
             vCalibration = {fx, fy, cx, cy};
 
@@ -203,20 +203,20 @@ namespace ORB_SLAM3 {
             originalCalib1_ = new Pinhole(vCalibration);
 
             //Check if it is a distorted PinHole
-            readParameter<float>(fSettings,"Camera1_k1",found,false);
+            readParameter<float>(fSettings,"Camera1.k1",found,false);
             if(found){
-                readParameter<float>(fSettings,"Camera1_k3",found,false);
+                readParameter<float>(fSettings,"Camera1.k3",found,false);
                 if(found){
                     vPinHoleDistorsion1_.resize(5);
-                    vPinHoleDistorsion1_[4] = readParameter<float>(fSettings,"Camera1_k3",found);
+                    vPinHoleDistorsion1_[4] = readParameter<float>(fSettings,"Camera1.k3",found);
                 }
                 else{
                     vPinHoleDistorsion1_.resize(4);
                 }
-                vPinHoleDistorsion1_[0] = readParameter<float>(fSettings,"Camera1_k1",found);
-                vPinHoleDistorsion1_[1] = readParameter<float>(fSettings,"Camera1_k2",found);
-                vPinHoleDistorsion1_[2] = readParameter<float>(fSettings,"Camera1_p1",found);
-                vPinHoleDistorsion1_[3] = readParameter<float>(fSettings,"Camera1_p2",found);
+                vPinHoleDistorsion1_[0] = readParameter<float>(fSettings,"Camera1.k1",found);
+                vPinHoleDistorsion1_[1] = readParameter<float>(fSettings,"Camera1.k2",found);
+                vPinHoleDistorsion1_[2] = readParameter<float>(fSettings,"Camera1.p1",found);
+                vPinHoleDistorsion1_[3] = readParameter<float>(fSettings,"Camera1.p2",found);
             }
 
             //Check if we need to correct distortion from the images
@@ -226,13 +226,12 @@ namespace ORB_SLAM3 {
         }
         else if(cameraModel == "Rectified"){
             cameraType_ = Rectified;
-            cout << "Here" << endl;
 
             //Read intrinsic parameters
-            float fx = readParameter<float>(fSettings,"Camera1_fx",found);
-            float fy = readParameter<float>(fSettings,"Camera1_fy",found);
-            float cx = readParameter<float>(fSettings,"Camera1_cx",found);
-            float cy = readParameter<float>(fSettings,"Camera1_cy",found);
+            float fx = readParameter<float>(fSettings,"Camera1.fx",found);
+            float fy = readParameter<float>(fSettings,"Camera1.fy",found);
+            float cx = readParameter<float>(fSettings,"Camera1.cx",found);
+            float cy = readParameter<float>(fSettings,"Camera1.cy",found);
 
             vCalibration = {fx, fy, cx, cy};
 
@@ -245,15 +244,15 @@ namespace ORB_SLAM3 {
             cameraType_ = KannalaBrandt;
 
             //Read intrinsic parameters
-            float fx = readParameter<float>(fSettings,"Camera1_fx",found);
-            float fy = readParameter<float>(fSettings,"Camera1_fy",found);
-            float cx = readParameter<float>(fSettings,"Camera1_cx",found);
-            float cy = readParameter<float>(fSettings,"Camera1_cy",found);
+            float fx = readParameter<float>(fSettings,"Camera1.fx",found);
+            float fy = readParameter<float>(fSettings,"Camera1.fy",found);
+            float cx = readParameter<float>(fSettings,"Camera1.cx",found);
+            float cy = readParameter<float>(fSettings,"Camera1.cy",found);
 
-            float k0 = readParameter<float>(fSettings,"Camera1_k1",found);
-            float k1 = readParameter<float>(fSettings,"Camera1_k2",found);
-            float k2 = readParameter<float>(fSettings,"Camera1_k3",found);
-            float k3 = readParameter<float>(fSettings,"Camera1_k4",found);
+            float k0 = readParameter<float>(fSettings,"Camera1.k1",found);
+            float k1 = readParameter<float>(fSettings,"Camera1.k2",found);
+            float k2 = readParameter<float>(fSettings,"Camera1.k3",found);
+            float k3 = readParameter<float>(fSettings,"Camera1.k4",found);
 
             vCalibration = {fx,fy,cx,cy,k0,k1,k2,k3};
 
@@ -261,8 +260,8 @@ namespace ORB_SLAM3 {
             originalCalib1_ = new KannalaBrandt8(vCalibration);
 
             if(sensor_ == System::STEREO || sensor_ == System::IMU_STEREO){
-                int colBegin = readParameter<int>(fSettings,"Camera1_overlappingBegin",found);
-                int colEnd = readParameter<int>(fSettings,"Camera1_overlappingEnd",found);
+                int colBegin = readParameter<int>(fSettings,"Camera1.overlappingBegin",found);
+                int colEnd = readParameter<int>(fSettings,"Camera1.overlappingEnd",found);
                 vector<int> vOverlapping = {colBegin, colEnd};
 
                 static_cast<KannalaBrandt8*>(calibration1_)->mvLappingArea = vOverlapping;
@@ -281,10 +280,10 @@ namespace ORB_SLAM3 {
             bNeedToRectify_ = true;
 
             //Read intrinsic parameters
-            float fx = readParameter<float>(fSettings,"Camera2_fx",found);
-            float fy = readParameter<float>(fSettings,"Camera2_fy",found);
-            float cx = readParameter<float>(fSettings,"Camera2_cx",found);
-            float cy = readParameter<float>(fSettings,"Camera2_cy",found);
+            float fx = readParameter<float>(fSettings,"Camera2.fx",found);
+            float fy = readParameter<float>(fSettings,"Camera2.fy",found);
+            float cx = readParameter<float>(fSettings,"Camera2.cx",found);
+            float cy = readParameter<float>(fSettings,"Camera2.cy",found);
 
 
             vCalibration = {fx, fy, cx, cy};
@@ -293,33 +292,33 @@ namespace ORB_SLAM3 {
             originalCalib2_ = new Pinhole(vCalibration);
 
             //Check if it is a distorted PinHole
-            readParameter<float>(fSettings,"Camera2_k1",found,false);
+            readParameter<float>(fSettings,"Camera2.k1",found,false);
             if(found){
-                readParameter<float>(fSettings,"Camera2_k3",found,false);
+                readParameter<float>(fSettings,"Camera2.k3",found,false);
                 if(found){
                     vPinHoleDistorsion2_.resize(5);
-                    vPinHoleDistorsion2_[4] = readParameter<float>(fSettings,"Camera2_k3",found);
+                    vPinHoleDistorsion2_[4] = readParameter<float>(fSettings,"Camera2.k3",found);
                 }
                 else{
                     vPinHoleDistorsion2_.resize(4);
                 }
-                vPinHoleDistorsion2_[0] = readParameter<float>(fSettings,"Camera2_k1",found);
-                vPinHoleDistorsion2_[1] = readParameter<float>(fSettings,"Camera2_k2",found);
-                vPinHoleDistorsion2_[2] = readParameter<float>(fSettings,"Camera2_p1",found);
-                vPinHoleDistorsion2_[3] = readParameter<float>(fSettings,"Camera2_p2",found);
+                vPinHoleDistorsion2_[0] = readParameter<float>(fSettings,"Camera2.k1",found);
+                vPinHoleDistorsion2_[1] = readParameter<float>(fSettings,"Camera2.k2",found);
+                vPinHoleDistorsion2_[2] = readParameter<float>(fSettings,"Camera2.p1",found);
+                vPinHoleDistorsion2_[3] = readParameter<float>(fSettings,"Camera2.p2",found);
             }
         }
         else if(cameraType_ == KannalaBrandt){
             //Read intrinsic parameters
-            float fx = readParameter<float>(fSettings,"Camera2_fx",found);
-            float fy = readParameter<float>(fSettings,"Camera2_fy",found);
-            float cx = readParameter<float>(fSettings,"Camera2_cx",found);
-            float cy = readParameter<float>(fSettings,"Camera2_cy",found);
+            float fx = readParameter<float>(fSettings,"Camera2.fx",found);
+            float fy = readParameter<float>(fSettings,"Camera2.fy",found);
+            float cx = readParameter<float>(fSettings,"Camera2.cx",found);
+            float cy = readParameter<float>(fSettings,"Camera2.cy",found);
 
-            float k0 = readParameter<float>(fSettings,"Camera1_k1",found);
-            float k1 = readParameter<float>(fSettings,"Camera1_k2",found);
-            float k2 = readParameter<float>(fSettings,"Camera1_k3",found);
-            float k3 = readParameter<float>(fSettings,"Camera1_k4",found);
+            float k0 = readParameter<float>(fSettings,"Camera1.k1",found);
+            float k1 = readParameter<float>(fSettings,"Camera1.k2",found);
+            float k2 = readParameter<float>(fSettings,"Camera1.k3",found);
+            float k3 = readParameter<float>(fSettings,"Camera1.k4",found);
 
 
             vCalibration = {fx,fy,cx,cy,k0,k1,k2,k3};
@@ -327,8 +326,8 @@ namespace ORB_SLAM3 {
             calibration2_ = new KannalaBrandt8(vCalibration);
             originalCalib2_ = new KannalaBrandt8(vCalibration);
 
-            int colBegin = readParameter<int>(fSettings,"Camera2_overlappingBegin",found);
-            int colEnd = readParameter<int>(fSettings,"Camera2_overlappingEnd",found);
+            int colBegin = readParameter<int>(fSettings,"Camera2.overlappingBegin",found);
+            int colEnd = readParameter<int>(fSettings,"Camera2.overlappingEnd",found);
             vector<int> vOverlapping = {colBegin, colEnd};
 
             static_cast<KannalaBrandt8*>(calibration2_)->mvLappingArea = vOverlapping;
@@ -336,11 +335,11 @@ namespace ORB_SLAM3 {
 
         //Load stereo extrinsic calibration
         if(cameraType_ == Rectified){
-            b_ = readParameter<float>(fSettings,"Stereo_b",found);
+            b_ = readParameter<float>(fSettings,"Stereo.b",found);
             bf_ = b_ * calibration1_->getParameter(0);
         }
         else{
-            cv::Mat cvTlr = readParameter<cv::Mat>(fSettings,"Stereo_T_c1_c2",found);
+            cv::Mat cvTlr = readParameter<cv::Mat>(fSettings,"Stereo.T_c1_c2",found);
             Tlr_ = Converter::toSophus(cvTlr);
 
             //TODO: also search for Trl and invert if necessary
@@ -349,7 +348,7 @@ namespace ORB_SLAM3 {
             bf_ = b_ * calibration1_->getParameter(0);
         }
 
-        thDepth_ = readParameter<float>(fSettings,"Stereo_ThDepth",found);
+        thDepth_ = readParameter<float>(fSettings,"Stereo.ThDepth",found);
 
 
     }
@@ -357,13 +356,13 @@ namespace ORB_SLAM3 {
     void Settings::readImageInfo(cv::FileStorage &fSettings) {
         bool found;
         //Read original and desired image dimensions
-        int originalRows = readParameter<int>(fSettings,"Camera_height",found);
-        int originalCols = readParameter<int>(fSettings,"Camera_width",found);
+        int originalRows = readParameter<int>(fSettings,"Camera.height",found);
+        int originalCols = readParameter<int>(fSettings,"Camera.width",found);
         originalImSize_.width = originalCols;
         originalImSize_.height = originalRows;
 
         newImSize_ = originalImSize_;
-        int newHeigh = readParameter<int>(fSettings,"Camera_newHeight",found,false);
+        int newHeigh = readParameter<int>(fSettings,"Camera.newHeight",found,false);
         if(found){
             bNeedToResize1_ = true;
             newImSize_.height = newHeigh;
@@ -382,7 +381,7 @@ namespace ORB_SLAM3 {
             }
         }
 
-        int newWidth = readParameter<int>(fSettings,"Camera_newWidth",found,false);
+        int newWidth = readParameter<int>(fSettings,"Camera.newWidth",found,false);
         if(found){
             bNeedToResize1_ = true;
             newImSize_.width = newWidth;
@@ -408,24 +407,24 @@ namespace ORB_SLAM3 {
             }
         }
 
-        fps_ = readParameter<int>(fSettings,"Camera_fps",found);
-        bRGB_ = (bool) readParameter<int>(fSettings,"Camera_RGB",found);
+        fps_ = readParameter<int>(fSettings,"Camera.fps",found);
+        bRGB_ = (bool) readParameter<int>(fSettings,"Camera.RGB",found);
     }
 
     void Settings::readIMU(cv::FileStorage &fSettings) {
         bool found;
-        noiseGyro_ = readParameter<float>(fSettings,"IMU_NoiseGyro",found);
-        noiseAcc_ = readParameter<float>(fSettings,"IMU_NoiseAcc",found);
-        gyroWalk_ = readParameter<float>(fSettings,"IMU_GyroWalk",found);
-        accWalk_ = readParameter<float>(fSettings,"IMU_AccWalk",found);
-        imuFrequency_ = readParameter<float>(fSettings,"IMU_Frequency",found);
+        noiseGyro_ = readParameter<float>(fSettings,"IMU.NoiseGyro",found);
+        noiseAcc_ = readParameter<float>(fSettings,"IMU.NoiseAcc",found);
+        gyroWalk_ = readParameter<float>(fSettings,"IMU.GyroWalk",found);
+        accWalk_ = readParameter<float>(fSettings,"IMU.AccWalk",found);
+        imuFrequency_ = readParameter<float>(fSettings,"IMU.Frequency",found);
 
-        cv::Mat cvTbc = readParameter<cv::Mat>(fSettings,"IMU_T_b_c1",found);
+        cv::Mat cvTbc = readParameter<cv::Mat>(fSettings,"IMU.T_b_c1",found);
         Tbc_ = Converter::toSophus(cvTbc);
 
-        readParameter<int>(fSettings,"IMU_InsertKFsWhenLost",found,false);
+        readParameter<int>(fSettings,"IMU.InsertKFsWhenLost",found,false);
         if(found){
-            insertKFsWhenLost_ = (bool) readParameter<int>(fSettings,"IMU_InsertKFsWhenLost",found,false);
+            insertKFsWhenLost_ = (bool) readParameter<int>(fSettings,"IMU.InsertKFsWhenLost",found,false);
         }
         else{
             insertKFsWhenLost_ = true;
@@ -435,36 +434,36 @@ namespace ORB_SLAM3 {
     void Settings::readRGBD(cv::FileStorage& fSettings) {
         bool found;
 
-        depthMapFactor_ = readParameter<float>(fSettings,"RGBD_DepthMapFactor",found);
-        thDepth_ = readParameter<float>(fSettings,"Stereo_ThDepth",found);
-        b_ = readParameter<float>(fSettings,"Stereo_b",found);
+        depthMapFactor_ = readParameter<float>(fSettings,"RGBD.DepthMapFactor",found);
+        thDepth_ = readParameter<float>(fSettings,"Stereo.ThDepth",found);
+        b_ = readParameter<float>(fSettings,"Stereo.b",found);
         bf_ = b_ * calibration1_->getParameter(0);
     }
 
     void Settings::readORB(cv::FileStorage &fSettings) {
         bool found;
 
-        nFeatures_ = readParameter<int>(fSettings,"ORBextractor_nFeatures",found);
-        scaleFactor_ = readParameter<float>(fSettings,"ORBextractor_scaleFactor",found);
-        nLevels_ = readParameter<int>(fSettings,"ORBextractor_nLevels",found);
-        initThFAST_ = readParameter<int>(fSettings,"ORBextractor_iniThFAST",found);
-        minThFAST_ = readParameter<int>(fSettings,"ORBextractor_minThFAST",found);
+        nFeatures_ = readParameter<int>(fSettings,"ORBextractor.nFeatures",found);
+        scaleFactor_ = readParameter<float>(fSettings,"ORBextractor.scaleFactor",found);
+        nLevels_ = readParameter<int>(fSettings,"ORBextractor.nLevels",found);
+        initThFAST_ = readParameter<int>(fSettings,"ORBextractor.iniThFAST",found);
+        minThFAST_ = readParameter<int>(fSettings,"ORBextractor.minThFAST",found);
     }
 
     void Settings::readViewer(cv::FileStorage &fSettings) {
         bool found;
 
-        keyFrameSize_ = readParameter<float>(fSettings,"Viewer_KeyFrameSize",found);
-        keyFrameLineWidth_ = readParameter<float>(fSettings,"Viewer_KeyFrameLineWidth",found);
-        graphLineWidth_ = readParameter<float>(fSettings,"Viewer_GraphLineWidth",found);
-        pointSize_ = readParameter<float>(fSettings,"Viewer_PointSize",found);
-        cameraSize_ = readParameter<float>(fSettings,"Viewer_CameraSize",found);
-        cameraLineWidth_ = readParameter<float>(fSettings,"Viewer_CameraLineWidth",found);
-        viewPointX_ = readParameter<float>(fSettings,"Viewer_ViewpointX",found);
-        viewPointY_ = readParameter<float>(fSettings,"Viewer_ViewpointY",found);
-        viewPointZ_ = readParameter<float>(fSettings,"Viewer_ViewpointZ",found);
-        viewPointF_ = readParameter<float>(fSettings,"Viewer_ViewpointF",found);
-        imageViewerScale_ = readParameter<float>(fSettings,"Viewer_imageViewScale",found,false);
+        keyFrameSize_ = readParameter<float>(fSettings,"Viewer.KeyFrameSize",found);
+        keyFrameLineWidth_ = readParameter<float>(fSettings,"Viewer.KeyFrameLineWidth",found);
+        graphLineWidth_ = readParameter<float>(fSettings,"Viewer.GraphLineWidth",found);
+        pointSize_ = readParameter<float>(fSettings,"Viewer.PointSize",found);
+        cameraSize_ = readParameter<float>(fSettings,"Viewer.CameraSize",found);
+        cameraLineWidth_ = readParameter<float>(fSettings,"Viewer.CameraLineWidth",found);
+        viewPointX_ = readParameter<float>(fSettings,"Viewer.ViewpointX",found);
+        viewPointY_ = readParameter<float>(fSettings,"Viewer.ViewpointY",found);
+        viewPointZ_ = readParameter<float>(fSettings,"Viewer.ViewpointZ",found);
+        viewPointF_ = readParameter<float>(fSettings,"Viewer.ViewpointF",found);
+        imageViewerScale_ = readParameter<float>(fSettings,"Viewer.imageViewScale",found,false);
 
          if(!found)
             imageViewerScale_ = 1.0f;
@@ -473,14 +472,14 @@ namespace ORB_SLAM3 {
     void Settings::readLoadAndSave(cv::FileStorage &fSettings) {
         bool found;
 
-        sLoadFrom_ = readParameter<string>(fSettings,"System_LoadAtlasFromFile",found,false);
-        sSaveto_ = readParameter<string>(fSettings,"System_SaveAtlasToFile",found,false);
+        sLoadFrom_ = readParameter<string>(fSettings,"System.LoadAtlasFromFile",found,false);
+        sSaveto_ = readParameter<string>(fSettings,"System.SaveAtlasToFile",found,false);
     }
 
     void Settings::readOtherParameters(cv::FileStorage& fSettings) {
         bool found;
 
-        thFarPoints_ = readParameter<float>(fSettings,"System_thFarPoints",found,false);
+        thFarPoints_ = readParameter<float>(fSettings,"System.thFarPoints",found,false);
     }
 
     void Settings::precomputeRectificationMaps() {
@@ -545,7 +544,7 @@ namespace ORB_SLAM3 {
 
         if(!settings.vPinHoleDistorsion1_.empty()){
             output << "\t-Camera 1 distortion parameters: [ ";
-            for(const float& d : settings.vPinHoleDistorsion1_){
+            for(float d : settings.vPinHoleDistorsion1_){
                 output << " " << d;
             }
             output << " ]" << endl;

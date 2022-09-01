@@ -63,69 +63,69 @@ bool MapDrawer::ParseViewerParamFile(cv::FileStorage &fSettings)
 {
     bool b_miss_params = false;
 
-    cv::FileNode node = fSettings["Viewer_KeyFrameSize"];
+    cv::FileNode node = fSettings["Viewer.KeyFrameSize"];
     if(!node.empty())
     {
         mKeyFrameSize = node.real();
     }
     else
     {
-        std::cerr << "*Viewer_KeyFrameSize parameter doesn't exist or is not a real number*" << std::endl;
+        std::cerr << "*Viewer.KeyFrameSize parameter doesn't exist or is not a real number*" << std::endl;
         b_miss_params = true;
     }
 
-    node = fSettings["Viewer_KeyFrameLineWidth"];
+    node = fSettings["Viewer.KeyFrameLineWidth"];
     if(!node.empty())
     {
         mKeyFrameLineWidth = node.real();
     }
     else
     {
-        std::cerr << "*Viewer_KeyFrameLineWidth parameter doesn't exist or is not a real number*" << std::endl;
+        std::cerr << "*Viewer.KeyFrameLineWidth parameter doesn't exist or is not a real number*" << std::endl;
         b_miss_params = true;
     }
 
-    node = fSettings["Viewer_GraphLineWidth"];
+    node = fSettings["Viewer.GraphLineWidth"];
     if(!node.empty())
     {
         mGraphLineWidth = node.real();
     }
     else
     {
-        std::cerr << "*Viewer_GraphLineWidth parameter doesn't exist or is not a real number*" << std::endl;
+        std::cerr << "*Viewer.GraphLineWidth parameter doesn't exist or is not a real number*" << std::endl;
         b_miss_params = true;
     }
 
-    node = fSettings["Viewer_PointSize"];
+    node = fSettings["Viewer.PointSize"];
     if(!node.empty())
     {
         mPointSize = node.real();
     }
     else
     {
-        std::cerr << "*Viewer_PointSize parameter doesn't exist or is not a real number*" << std::endl;
+        std::cerr << "*Viewer.PointSize parameter doesn't exist or is not a real number*" << std::endl;
         b_miss_params = true;
     }
 
-    node = fSettings["Viewer_CameraSize"];
+    node = fSettings["Viewer.CameraSize"];
     if(!node.empty())
     {
         mCameraSize = node.real();
     }
     else
     {
-        std::cerr << "*Viewer_CameraSize parameter doesn't exist or is not a real number*" << std::endl;
+        std::cerr << "*Viewer.CameraSize parameter doesn't exist or is not a real number*" << std::endl;
         b_miss_params = true;
     }
 
-    node = fSettings["Viewer_CameraLineWidth"];
+    node = fSettings["Viewer.CameraLineWidth"];
     if(!node.empty())
     {
         mCameraLineWidth = node.real();
     }
     else
     {
-        std::cerr << "*Viewer_CameraLineWidth parameter doesn't exist or is not a real number*" << std::endl;
+        std::cerr << "*Viewer.CameraLineWidth parameter doesn't exist or is not a real number*" << std::endl;
         b_miss_params = true;
     }
 
