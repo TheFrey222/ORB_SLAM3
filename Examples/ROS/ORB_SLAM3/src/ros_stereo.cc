@@ -326,7 +326,7 @@ void ImageGrabber::Sync()
         cv::remap(imRight,imRight,M1r,M2r,cv::INTER_LINEAR);
       }
 
-      mpSLAM->TrackStereo(imLeft,imRight,tImLeft);
+      frame = mpSLAM->TrackStereo(imLeft,imRight,tImLeft);
 
       std::chrono::milliseconds tSleep(1);
       std::this_thread::sleep_for(tSleep);
