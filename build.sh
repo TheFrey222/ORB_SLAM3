@@ -1,12 +1,20 @@
-echo "Configuring and building Thirdparty/DBoW2 ..."
+echo "Configuring and building Thirdparty/Catch2 ..."
 
-cd Thirdparty/Pangolin
-./scripts/install_prerequisites.sh recommended
+cd Thirdparty/Catch2
 mkdir build
 cd build
 cmake .. -DCMAKE_BUILD_TYPE=Release
 make -j$((`nproc`-2))
-ctest
+make install
+
+echo "Configuring and building Thirdparty/Pangolin ..."
+
+cd ../../Pangolin
+mkdir build
+cd build
+cmake .. -DCMAKE_BUILD_TYPE=Release
+make -j$((`nproc`-2))
+make install
 
 echo "Configuring and building Thirdparty/DBoW2 ..."
 
