@@ -1,6 +1,16 @@
 echo "Configuring and building Thirdparty/DBoW2 ..."
 
-cd Thirdparty/DBoW2
+cd Thirdparty/Pangolin
+./scripts/install_prerequisites.sh recommended
+mkdir build
+cd build
+cmake .. -DCMAKE_BUILD_TYPE=Release
+make -j$((`nproc`-2))
+ctest
+
+echo "Configuring and building Thirdparty/DBoW2 ..."
+
+cd ../../DBoW2
 mkdir build
 cd build
 cmake .. -DCMAKE_BUILD_TYPE=Release

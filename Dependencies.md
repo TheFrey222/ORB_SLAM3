@@ -3,6 +3,13 @@
 
 In this document we list all the pieces of code included  by ORB-SLAM3 and linked libraries which are not property of the authors of ORB-SLAM3.
 
+#####Libraries and packages to be installed before usage
+
+* cmake
+* libeigen3-dev 
+* libboost-dev 
+* libboost-serialization-dev 
+* libssl-dev 
 
 #####Code in **src** and **include** folders
 
